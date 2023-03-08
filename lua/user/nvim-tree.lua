@@ -10,10 +10,28 @@ end
 
 local tree_cb = nvim_tree_config.nvim_tree_callback
 
+vim.cmd [[
+highlight! def NvimTreeWinSeparator ctermfg=102 guifg=#073642 guibg=#073642
+highlight! def link NvimTreeNormal TabLineFill
+highlight! def link NvimTreeNormalNC TabLineFill
+]]
+
 nvim_tree.setup {
   update_focused_file = {
     enable = true,
     update_cwd = true,
+  },
+  trash = {
+    cmd = "trash",
+    require_confirm = true,
+  },
+  actions = {
+    open_file = {
+      quit_on_open = true,
+      window_picker = {
+        enable = false,
+      },
+    },
   },
   renderer = {
     root_folder_modifier = ":t",
@@ -33,10 +51,10 @@ nvim_tree.setup {
         },
         git = {
           unstaged = "",
-          staged = "S",
+          staged = "✓",
           unmerged = "",
           renamed = "➜",
-          untracked = "U",
+          untracked = "?",
           deleted = "",
           ignored = "◌",
         },
@@ -55,7 +73,6 @@ nvim_tree.setup {
   },
   view = {
     width = 30,
-    height = 30,
     side = "left",
     mappings = {
       list = {

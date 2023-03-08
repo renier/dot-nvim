@@ -13,7 +13,7 @@ toggleterm.setup({
 	start_in_insert = true,
 	insert_mappings = true,
 	persist_size = true,
-	direction = "float",
+	direction = "horizontal",
 	close_on_exit = true,
 	shell = vim.o.shell,
 	float_opts = {
@@ -51,10 +51,10 @@ function _NODE_TOGGLE()
 	node:toggle()
 end
 
-local ncdu = Terminal:new({ cmd = "ncdu", hidden = true })
+local ruby = Terminal:new({ cmd = "irb", hidden = true })
 
-function _NCDU_TOGGLE()
-	ncdu:toggle()
+function _RUBY_TOGGLE()
+	ruby:toggle()
 end
 
 local htop = Terminal:new({ cmd = "htop", hidden = true })

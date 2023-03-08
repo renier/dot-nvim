@@ -132,30 +132,30 @@ local mappings = {
     name = "LSP",
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
     d = {
-      "<cmd>Telescope lsp_document_diagnostics<cr>",
+      "<cmd>lua require('telescope.builtin').diagnostics({bufnr=0})<cr>",
       "Document Diagnostics",
     },
     w = {
-      "<cmd>Telescope lsp_workspace_diagnostics<cr>",
+      "<cmd>lua require('telescope.builtin').diagnostics()<cr>",
       "Workspace Diagnostics",
     },
     f = { "<cmd>lua vim.lsp.buf.format{async=true}<cr>", "Format" },
     i = { "<cmd>LspInfo<cr>", "Info" },
     I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
     j = {
-      "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
+      "<cmd>lua vim.diagnostic.goto_next()<CR>",
       "Next Diagnostic",
     },
     k = {
-      "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",
+      "<cmd>lua vim.diagnostic.goto_prev()<cr>",
       "Prev Diagnostic",
     },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
-    q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
+    q = { "<cmd>lua vim.diagnostic.set_loclist()<cr>", "Quickfix" },
     r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-    s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
+    s = { "<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>", "Document Symbols" },
     S = {
-      "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
+      "<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>",
       "Workspace Symbols",
     },
   },
@@ -174,13 +174,30 @@ local mappings = {
   t = {
     name = "Terminal",
     n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
-    u = { "<cmd>lua _NCDU_TOGGLE()<cr>", "NCDU" },
+    r = { "<cmd>lua _RUBY_TOGGLE()<cr>", "Ruby" },
     t = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
     p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
     f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
-    h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
+    h = { "<cmd>ToggleTerm size=20 direction=horizontal<cr>", "Horizontal" },
     v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
   },
+	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>DT", "<cmd>lua require('dap-go').debug_test()<cr>", opts)
+  d = {
+    name = "DAP",
+    t = { "<cmd>lua require('dap-go').debug_test()<cr>", "Debug test" },
+    b = { "<cmd>lua require('dap').toggle_breakpoint()<cr>", "Toggle breakpoint" },
+    r = { "<cmd>lua require('dap').repl.open()<cr>", "REPL" },
+    l = { "<cmd>lua require('dap').run_last()<cr>", "Run last" },
+    c = { "<cmd>lua require('dap').continue()<cr>", "Continue" },
+    o = { "<cmd>lua require('dap').step_over()<cr>", "Step over" },
+    i = { "<cmd>lua require('dap').step_into()<cr>", "Step into" },
+    e = { "<cmd>lua require('dap').step_out()<cr>", "Step out" },
+    h = { "<cmd>lua require('dap.ui.widgets').hover()<cr>", "Hover" },
+    p = { "<cmd>lua require('dap.ui.widgets').preview()<cr>", "Preview" },
+    f = { "<cmd>lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').frames)<cr>", "Frames" },
+    s = { "<cmd>lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').scopes)<cr>", "Scopes" },
+    u = { "<cmd>lua require('dapui').toggle()<cr>", "UI" }
+  }
 }
 
 which_key.setup(setup)
