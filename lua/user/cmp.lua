@@ -3,6 +3,8 @@ if not cmp_status_ok then
   return
 end
 
+local lspkind = require 'lspkind'
+
 local snip_status_ok, luasnip = pcall(require, "luasnip")
 if not snip_status_ok then
   return
@@ -64,68 +66,89 @@ cmp.setup {
     },
     -- Accept currently selected item. If none selected, `select` first item.
     -- Set `select` to `false` to only confirm explicitly selected items.
-    ["<CR>"] = cmp.mapping.confirm { select = true },
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expandable() then
-        luasnip.expand()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      elseif check_backspace() then
-        fallback()
-      else
-        fallback()
-      end
-    end, {
-      "i",
-      "s",
-    }),
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, {
-      "i",
-      "s",
-    }),
+    ["<CR>"] = cmp.mapping.confirm { select = false },
+
+    -- This was causing the cursor to jump around in insert mode on TAB
+    -- https://www.reddit.com/r/neovim/comments/z9os8x/strange_behaviour_cursor_jumping_with_tabkey/
+    -- ["<Tab>"] = cmp.mapping(function(fallback)
+    --   if cmp.visible() then
+    --     cmp.select_next_item()
+    --   elseif luasnip.expandable() then
+    --     luasnip.expand()
+    --   elseif luasnip.expand_or_jumpable() then
+    --     luasnip.expand_or_jump()
+    --   elseif check_backspace() then
+    --     fallback()
+    --   else
+    --     fallback()
+    --   end
+    -- end, {
+    --   "i",
+    --   "s",
+    -- }),
+    -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+    --   if cmp.visible() then
+    --     cmp.select_prev_item()
+    --   elseif luasnip.jumpable(-1) then
+    --     luasnip.jump(-1)
+    --   else
+    --     fallback()
+    --   end
+    -- end, {
+    --   "i",
+    --   "s",
+    -- }),
   },
+  -- formatting = {
+  --   fields = { "kind", "abbr", "menu" },
+  --   format = function(entry, vim_item)
+  --     -- Kind icons
+  --     vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+  --     -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+  --     vim_item.menu = ({
+  --       nvim_lsp = "[LSP]",
+  --       luasnip = "[Snippet]",
+  --       buffer = "[Buffer]",
+  --       path = "[Path]",
+  --     })[entry.source.name]
+  --     return vim_item
+  --   end,
+  -- },
   formatting = {
-    fields = { "kind", "abbr", "menu" },
-    format = function(entry, vim_item)
-      -- Kind icons
-      vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-      -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-      vim_item.menu = ({
-        nvim_lsp = "[LSP]",
-        luasnip = "[Snippet]",
-        buffer = "[Buffer]",
-        path = "[Path]",
-      })[entry.source.name]
-      return vim_item
-    end,
+    format = lspkind.cmp_format({
+      maxwidth = 50,
+      before = function(entry, vim_item)
+        vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+        vim_item.menu = ({
+          nvim_lsp = "[LSP]",
+          luasnip = "[Snippet]",
+          buffer = "[Buffer]",
+          path = "[Path]",
+        })[entry.source.name]
+        return vim_item
+      end
+    })
   },
-  sources = {
+  sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "luasnip" },
     { name = "buffer" },
     { name = "path" },
-  },
+  }),
   confirm_opts = {
     behavior = cmp.ConfirmBehavior.Replace,
     select = false,
   },
   window = {
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-    },
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered()
   },
   experimental = {
     ghost_text = false,
     native_menu = false,
   },
 }
+
+vim.cmd [[
+  highlight! default link CmpItemKind CmpItemMenuDefault
+]]

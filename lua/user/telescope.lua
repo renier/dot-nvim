@@ -9,8 +9,9 @@ telescope.setup {
   defaults = {
 
     prompt_prefix = " ",
-    selection_caret = " ",
-    path_display = { "smart" },
+    -- selection_caret = " ",
+    selection_caret = "> ",
+    path_display = { truncate = 3 },
 
     mappings = {
       i = {
@@ -94,3 +95,4 @@ telescope.setup {
     -- please take a look at the readme of the extension you want to configure
   },
 }
+require("telescope").load_extension("dap")
