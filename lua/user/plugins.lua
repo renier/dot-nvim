@@ -53,7 +53,13 @@ return packer.startup(function(use)
 	use({ "numToStr/Comment.nvim" , requires = { "JoosepAlviste/nvim-ts-context-commentstring" }})
 	use("kyazdani42/nvim-web-devicons")
 	use({ "kyazdani42/nvim-tree.lua", commit = "7282f7de8aedf861fe0162a559fc2b214383c51c", on =  "NvimTreeToggle" })
-	-- use({ "romgrk/barbar.nvim", requires = { "kyazdani42/nvim-web-devicons" } })
+	use({
+    "romgrk/barbar.nvim",
+    requires = {
+      "lewis6991/gitsigns.nvim",
+      "kyazdani42/nvim-web-devicons",
+    },
+  })
 	use({ "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" })
 	use({ "nvim-lualine/lualine.nvim" })
 	use({ "akinsho/toggleterm.nvim", commit = "aaeed9e02167c5e8f00f25156895a6fd95403af8" })
