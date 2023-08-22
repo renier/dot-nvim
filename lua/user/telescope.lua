@@ -13,6 +13,8 @@ telescope.setup {
     selection_caret = "> ",
     path_display = { truncate = 3 },
 
+    vimgrep_arguments = { "rg", "--color=never", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case", "--hidden", "--glob", "!**/.git/*" },
+
     mappings = {
       i = {
         ["<C-n>"] = actions.cycle_history_next,
@@ -86,6 +88,9 @@ telescope.setup {
     -- }
     -- Now the picker_config_key will be applied every time you call this
     -- builtin picker
+    find_files = {
+      find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" }
+    },
   },
   extensions = {
     -- Your extension configuration goes here:

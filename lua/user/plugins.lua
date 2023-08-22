@@ -41,7 +41,10 @@ packer.init({
 -- Install your plugins here
 return packer.startup(function(use)
 	-- My plugins here
-	use("wbthomason/packer.nvim")
+	use({
+		"wbthomason/packer.nvim",
+	})
+  -- use("dstein64/vim-startuptime")
 	use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
 	use("nvim-lua/plenary.nvim")
   use("mortepau/codicons.nvim")
@@ -49,7 +52,7 @@ return packer.startup(function(use)
   use("windwp/nvim-ts-autotag")
 	use({ "numToStr/Comment.nvim" , requires = { "JoosepAlviste/nvim-ts-context-commentstring" }})
 	use("kyazdani42/nvim-web-devicons")
-	use({ "kyazdani42/nvim-tree.lua", commit = "7282f7de8aedf861fe0162a559fc2b214383c51c" })
+	use({ "kyazdani42/nvim-tree.lua", commit = "7282f7de8aedf861fe0162a559fc2b214383c51c", on =  "NvimTreeToggle" })
 	-- use({ "romgrk/barbar.nvim", requires = { "kyazdani42/nvim-web-devicons" } })
 	use({ "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" })
 	use({ "nvim-lualine/lualine.nvim" })
@@ -64,16 +67,25 @@ return packer.startup(function(use)
 	-- use "godlygeek/tabular"
 	use("elzr/vim-json")
 	use("tpope/vim-markdown")
-	use("vim-pandoc/vim-pandoc-syntax")
+	-- use("vim-pandoc/vim-pandoc-syntax")
 
 	-- Colorschemes
 	-- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
 	-- use "lunarvim/darkplus.nvim"
 	-- use("overcache/NeoSolarized")
-  use {
-    'svrana/neosolarized.nvim',
-    requires = { 'tjdevries/colorbuddy.nvim' }
-  }
+  -- use {
+  --   'svrana/neosolarized.nvim',
+  --   requires = { 'tjdevries/colorbuddy.nvim' }
+  -- }
+  use({
+    "EdenEast/nightfox.nvim",
+    config = function()
+      require('nightfox').setup({
+
+      })
+      vim.cmd("colorscheme terafox")
+    end
+  })
 
 	-- cmp plugins
 	use("hrsh7th/cmp-buffer") -- buffer completions
@@ -99,13 +111,25 @@ return packer.startup(function(use)
 
 	use("tamago324/nlsp-settings.nvim") -- language server settings defined in json for rust-tools
 	use("simrat39/rust-tools.nvim")
-  use("RRethy/vim-illuminate")
+  -- use("RRethy/vim-illuminate")
 
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim", tag = "0.1.1" })
 
 	-- Treesitter
-	use("nvim-treesitter/nvim-treesitter")
+	use({ "nvim-treesitter/nvim-treesitter", tag = "v0.8.5.2", run = ":TSUpdate" })
+
+  -- Highlight word under cursor in visible lines
+  use({
+    "tzachar/local-highlight.nvim",
+    config = function()
+      require('local-highlight').setup({
+        file_types = {'golang', 'go'},
+        -- hlgroup = 'NvimTreeWindowPicker',
+        -- cw_hlgroup = 'NvimTreeWindowPicker',
+      })
+    end
+  })
 
 	-- Git
 	use("lewis6991/gitsigns.nvim")
@@ -113,18 +137,19 @@ return packer.startup(function(use)
 		"ruifm/gitlinker.nvim",
 		requires = "nvim-lua/plenary.nvim",
 	})
+	use("tpope/vim-fugitive")
+	use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" })
 
 	-- DAP
 	use("mfussenegger/nvim-dap")
   use("nvim-telescope/telescope-dap.nvim")
   use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
-	use("leoluz/nvim-dap-go")
-
-	use("tpope/vim-fugitive")
-	use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" })
+	use({ "leoluz/nvim-dap-go", commit = "4af956c" }) -- pull from main branch once we are on neovim 0.9
 
 	-- D2
-	use("terrastruct/d2-vim")
+	-- use("terrastruct/d2-vim")
+
+  use("vim-scripts/SyntaxAttr.vim")
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

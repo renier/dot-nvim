@@ -66,13 +66,18 @@ local progress = function()
 end
 
 local spaces = function()
-	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+	local spacesortabs = "tabs"
+	if vim.api.nvim_buf_get_option(0, "expandtab") then
+		spacesortabs = "spaces"
+	end
+	return spacesortabs .. ": " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 end
 
+vim.cmd("colorscheme terafox")
 lualine.setup({
 	options = {
 		icons_enabled = true,
-		theme = "solarized_dark",
+		-- theme = "solarized_dark",
     -- component_separators = { left = '', right = ''},
     -- section_separators = { left = '', right = ''},
     component_separators = { left = '', right = ''},
@@ -116,7 +121,7 @@ lualine.setup({
                   -- 3: Shows buffer number
                   -- 4: Shows buffer name + buffer number
 
-        max_length = vim.o.columns, -- Maximum width of buffers component,
+        max_length = 300, -- vim.o.columns, -- Maximum width of buffers component,
                                     -- it can also be a function that returns
                                     -- the value of `max_length` dynamically.
         filetype_names = {
