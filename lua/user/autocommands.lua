@@ -73,15 +73,15 @@ vim.api.nvim_create_autocmd({"VimEnter", "ColorScheme"}, {
   pattern = "*",
   callback = function ()
     for _, suffix in ipairs({'', 'ERROR', 'HINT', 'INFO', 'WARN', 'Index', 'Mod', 'Sign', 'SignRight', 'Target', 'Icon'}) do
-      vim.api.nvim_set_hl(0, "BufferCurrent" .. suffix, { bold = true, fg = '#0f1c1e', bg = '#5a93aa' })
-      vim.api.nvim_set_hl(0, "BufferVisible" .. suffix, { fg = '#ffffff', bg = '#264048' })
-      vim.api.nvim_set_hl(0, "BufferInactive" .. suffix, { fg = '#5a93aa', bg = '#264048' })
+      vim.api.nvim_set_hl(0, "BufferCurrent" .. suffix, { fg = '#fda47f', bg = '#152528' })
+      vim.api.nvim_set_hl(0, "BufferVisible" .. suffix, { fg = '#7aa4a1', bg = '#152528' })
+      vim.api.nvim_set_hl(0, "BufferInactive" .. suffix, { fg = '#6d7f8b', bg = '#0f1c1e' })
     end
-    vim.api.nvim_set_hl(0, "BufferInactiveSign", { bg = '#264048', fg = '#0f1c1e' })
-    vim.api.nvim_set_hl(0, "BufferInactiveSignRight", { bg = '#264048', fg = '#0f1c1e' })
-    vim.api.nvim_set_hl(0, "BufferCurrentSign", { bg = '#5a93aa', fg = '#0f1c1e' })
-    vim.api.nvim_set_hl(0, "BufferCurrentSignRight", { bg = '#5a93aa', fg = '#0f1c1e' })
-    vim.api.nvim_set_hl(0, "BufferVisibleSign", { bg = '#264048', fg = '#0f1c1e' })
-    vim.api.nvim_set_hl(0, "BufferVisibleSignRight", { bg = '#264048', fg = '#0f1c1e' })
+    vim.api.nvim_set_hl(0, "BufferInactiveSign", { bg = '#0f1c1e', fg = '#0f1c1e' })
+    vim.api.nvim_set_hl(0, "BufferInactiveSignRight", { bg = '#0f1c1e', fg = '#0f1c1e' })
+    vim.api.nvim_set_hl(0, "BufferCurrentSign", { bg = '#152528', fg = '#0f1c1e' })
+    vim.api.nvim_set_hl(0, "BufferCurrentSignRight", { bg = '#152528', fg = '#0f1c1e' })
+    vim.api.nvim_set_hl(0, "BufferVisibleSign", { bg = '#152528', fg = '#0f1c1e' })
+    vim.api.nvim_set_hl(0, "BufferVisibleSignRight", { bg = '#152528', fg = '#0f1c1e' })
   end
 })
